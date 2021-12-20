@@ -1,4 +1,4 @@
-version: '3.1'
+version: '2.7'
 
 networks:
   ssx_network:
@@ -6,7 +6,7 @@ networks:
 volumes:
   ssx-db-data:
     external: true
-    name: 
+    name: ssx-db-data
 services:
   web:
     image: odoo:15.0
