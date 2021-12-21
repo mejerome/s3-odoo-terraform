@@ -71,7 +71,7 @@ resource "aws_security_group" "ntpd_sg" {
 }
 
 resource "aws_security_group" "postgres_sg" {
-  name = "allow_postgres"
+  name   = "allow_postgres"
   vpc_id = aws_vpc.ssx-vpc.id
   ingress {
     from_port   = 5432
