@@ -27,17 +27,14 @@ resource "aws_instance" "odoo" {
     device_index         = 0
   }
 
-  provisioner "file" {
-    source      = "../custom_addons"
-    destination = "~/custom_addons"
-  }
-
   provisioner "remote-exec" {
     inline = [
-      "sudo apt update", 
-      "sudo apt install python3 -y", 
-      "sudo apt install ansible -y",
+      "sudo apt update && sudo apt upgrade -y && sudo apt install -y python3-pip ansible",
       ]
+  }
+  provisioner "file" {
+    source      = "../custom_addons"
+    destination = "/home/bitnami/custom_addons"
   }
 
   connection {

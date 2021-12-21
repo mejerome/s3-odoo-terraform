@@ -31,7 +31,7 @@ variable "key_file" {
 }
 
 variable "instance_type" {
-  default = "t3.small"
+  default = "t2.small"
 }
 
 variable "hosted_zone_id" {
