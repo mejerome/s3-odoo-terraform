@@ -9,12 +9,12 @@ resource "aws_ecs_task_definition" "odoo_app" {
 [
   {
     "name": "odoo_app",
-    "image": "${var.odoo_app_image}",
+    "image": "docker.io/bitnami/odoo:15",
     "essential": true,
     "portMappings": [
       {
-        "containerPort": 80,
-        "hostPort": 80
+        "containerPort": 8069,
+        "hostPort": 8069
       }
     ],
     "environment": [

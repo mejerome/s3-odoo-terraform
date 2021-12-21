@@ -52,7 +52,7 @@ resource "aws_alb" "odoo_alb_load_balancer" {
 
 resource "aws_alb_target_group" "odoo_app_target_group" {
   name                 = "odoo-app-target-group"
-  port                 = 80
+  port                 = 8069
   protocol             = "HTTP"
   vpc_id               = aws_vpc.ssx-vpc.id
   deregistration_delay = "10"

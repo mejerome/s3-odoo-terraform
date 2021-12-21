@@ -13,7 +13,7 @@ resource "aws_ecs_task_definition" "odoo_db" {
 [
   {
     "name": "odoo_db",
-    "image": "postgres:alpine",
+    "image": "docker.io/bitnami/postgresql:alpine",
     "essential": true,
     "portMappings": [
       {
