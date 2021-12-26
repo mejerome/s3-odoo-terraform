@@ -3,7 +3,7 @@
 # vars
 BACKUP_DIR=~/odoo_backup
 ODOO_DATABASE=ssx-base-db
-ADMIN_PASSWORD=XRpaXFTKUn73
+ADMIN_PASSWORD=wxerdXCDFvm2
 PROFILE=default
 BUCKET=ssx-postgres-backups
 BUCKET_DIR=ssx-restore

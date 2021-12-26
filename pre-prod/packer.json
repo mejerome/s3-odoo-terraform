@@ -1,0 +1,31 @@
+{
+  "variables": {
+    "region": "eu-central-1",
+    "ssh_username": "bitnami",
+    "base_ami": "ami-084ab2148108d0e90",
+    "key_name": "odoo-key-eu",
+    "instance_type": "t3.small",
+    "subnet": "XXX"
+  },
+  "builders": [
+    {
+      "type": "amazon-ebs",
+      "region": "{{user `region`}}",
+      "subnet": "{{user `subnet`}}",
+      "source_ami": "{{user `base_ami`}}",
+      "instance_type": "{{user `instance_type`}}",
+      "ssh_username": "{{user `ssh_username`}}",
+      "ami_name": "odoo-packer-{{timestamp}}",
+      "associate_public_ip": true,
+      "tags": {
+        "Name": "Packers AMI"
+      }
+    }
+  ],
+  "provisioners": [
+    {
+      "type": "ansible",
+      "playbook_file": "../playbook/bitnami_prep.yml"
+    }
+  ]
+}
