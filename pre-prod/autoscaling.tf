@@ -19,7 +19,7 @@ resource "aws_launch_configuration" "odoo" {
     aws_security_group.allow_http.id,
     aws_security_group.allow_ssh.id,
   ]
-  iam_instance_profile = "ec2_s3_access"
+
   lifecycle {
     create_before_destroy = true
   }

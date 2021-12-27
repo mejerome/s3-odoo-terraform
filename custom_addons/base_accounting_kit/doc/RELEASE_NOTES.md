@@ -5,7 +5,3 @@
 #### ADD
 - Initial commit for Odoo 15 accounting
 
-#### 20.11.2021
-#### Version 15.0.2.0.1
-#### ADD
-- Added specific user group for Accounting Dashboard view.

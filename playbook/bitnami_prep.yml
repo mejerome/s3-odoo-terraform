@@ -1,8 +1,9 @@
 ---
-- hosts: all
-  become: true
+- hosts: localhost
+  connection: local
+  become: yes
 
-  vars_files:
+  var_files:
     - variables.yml
 
   tasks:
@@ -30,12 +31,6 @@
         regexp: '^admin_passwd'
         line: "admin_passwd  = {{ odoo_admin_password }}"
 
-    - name: Set odoo database filter in odoo.conf
-      lineinfile:
-        path: /opt/bitnami/odoo/conf/odoo.conf
-        regexp: '^dbfilter'
-        line: "dbfilter = {{ odoo_db_name }}"
-
     - name: Add custom_addons as addons_path to odoo.conf
       lineinfile:
         path: /opt/bitnami/odoo/conf/odoo.conf
@@ -55,11 +50,11 @@
         creates: /home/bitnami/odoo_restore/restore.zip   
 
     - name: Delete existing odoo database
-      shell: "curl -F 'master_pwd={{ odoo_admin_password }}' -F 'name={{ odoo_db_name }}' http://localhost:8069/web/database/drop"
+      shell: "curl -F 'master_pwd={{ odoo_admin_password }}' -F 'name=ssx-base-db' http://localhost:8069/web/database/drop"
       ignore_errors: yes
 
     - name: Restore odoo db from zip file
-      shell: "curl -F 'master_pwd={{ odoo_admin_password }}' -F backup_file=@/home/bitnami/odoo_restore/restore.zip -F 'copy=true' -F 'name={{ odoo_db_name }}' http://localhost:8069/web/database/restore"
+      shell: "curl -F 'master_pwd={{ odoo_admin_password }}' -F backup_file=@/home/bitnami/odoo_restore/restore.zip -F 'copy=true' -F 'name=ssx-base-db' http://localhost:8069/web/database/restore"
 
     - name: Stop and disable timesyncd
       shell: "systemctl stop systemd-timesyncd; systemctl disable systemd-timesyncd"
@@ -79,7 +74,7 @@
         name: backup_odoo
         user: bitnami
         hour: '*/6'
-        job: "curl -X POST -F 'master_pwd={{ odoo_admin_password }}' -F 'name={{ odoo_db_name }}' -F 'backup_format=zip' -o /home/bitnami/odoo_backup/{{ odoo_db_name }}-$(date +%Y.%m.%d-%H.%M).zip http://localhost:8069/web/database/backup"
+        job: "curl -X POST -F 'master_pwd={{ odoo_admin_password }}' -F 'name=ssx-base-db' -F 'backup_format=zip' -o /home/bitnami/odoo_backup/ssx-base-db-$(date +%Y.%m.%d-%H.%M).zip http://localhost:8069/web/database/backup"
         state: present
 
     - name: Make a restore file from latest backup
