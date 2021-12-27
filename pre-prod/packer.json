@@ -27,18 +27,14 @@
       "destination": "/home/bitnami/custom_addons"
     },
     {
-      "type": "file",
-      "source": "../playbook",
-      "destination": "/home/bitnami/playbook"
-    },
-    {
       "type": "shell",
       "inline": [
-        "sleep 120",
-        "sudo apt-get update",
-        "sudo apt-get install -y python3-pip ansible git",
-        "ansible-playbook /home/bitnami/bitnami_prep.yml"
+          "sleep 30"
       ]
+    },
+    {
+      "type": "ansible",
+      "playbook_file": "../playbook/bitnami_prep.yml"   
     }
   ]
 }
