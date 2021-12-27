@@ -1,7 +1,18 @@
-
+data "aws_ami" "ec2-ami" {
+  filter {
+    name   = "state"
+    values = ["available"]
+  }  
+  filter {
+    name   = "tag:Name"
+    values = ["ssx-odoo-packer"]
+  }
+  owners = ["self"]
+  most_recent = true
+}
 resource "aws_launch_configuration" "odoo" {
   name_prefix   = "odoo-"
-  image_id      = var.image_id
+  image_id      = data.aws_ami.ec2-ami.id
   instance_type = var.instance_type
   key_name      = var.key_name
   security_groups = [

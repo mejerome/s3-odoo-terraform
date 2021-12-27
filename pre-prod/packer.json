@@ -2,30 +2,43 @@
   "variables": {
     "region": "eu-central-1",
     "ssh_username": "bitnami",
-    "base_ami": "ami-084ab2148108d0e90",
+    "base_ami": "ami-013361026d273c8c9",
     "key_name": "odoo-key-eu",
-    "instance_type": "t3.small",
-    "subnet": "XXX"
+    "instance_type": "t3.small"
   },
   "builders": [
     {
       "type": "amazon-ebs",
       "region": "{{user `region`}}",
-      "subnet": "{{user `subnet`}}",
       "source_ami": "{{user `base_ami`}}",
       "instance_type": "{{user `instance_type`}}",
       "ssh_username": "{{user `ssh_username`}}",
       "ami_name": "odoo-packer-{{timestamp}}",
-      "associate_public_ip": true,
+      "iam_instance_profile": "ec2_s3_access",
       "tags": {
-        "Name": "Packers AMI"
+        "Name": "ssx-odoo-packer"
       }
     }
   ],
   "provisioners": [
     {
-      "type": "ansible",
-      "playbook_file": "../playbook/bitnami_prep.yml"
+      "type": "file",
+      "source": "../custom_addons",
+      "destination": "/home/bitnami/custom_addons"
+    },
+    {
+      "type": "file",
+      "source": "../playbook",
+      "destination": "/home/bitnami/playbook"
+    },
+    {
+      "type": "shell",
+      "inline": [
+        "sleep 120",
+        "sudo apt-get update",
+        "sudo apt-get install -y python3-pip ansible git",
+        "ansible-playbook /home/bitnami/bitnami_prep.yml"
+      ]
     }
   ]
 }
