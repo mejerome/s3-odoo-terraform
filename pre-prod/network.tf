@@ -47,3 +47,29 @@ resource "aws_route_table_association" "public" {
   subnet_id      = element(aws_subnet.public.*.id, count.index)
   route_table_id = aws_route_table.public.id
 }
+
+resource "aws_network_interface" "odoo_nic" {
+  subnet_id      = aws_subnet.public.0.id
+  security_groups = [
+    aws_security_group.allow_http.id,
+    aws_security_group.allow_ssh.id,
+  ]
+  tags = {
+    Name = "primary_nic"
+  }
+}
+
+resource "aws_route53_record" "ssxodoo" {
+  zone_id = var.hosted_zone_id
+  name    = var.hosted_zone_name
+  type    = "CNAME"
+  ttl     = "300"
+
+  records = [
+    aws_instance.ssxodoo.public_dns,
+  ]
+
+  depends_on = [
+    aws_instance.ssxodoo,
+  ]
+}

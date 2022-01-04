@@ -1,3 +1,3 @@
-output "elb_dns_name" {
-  value = aws_lb.odoo.dns_name
+output "instance_dns_name" {
+  value = aws_instance.ssxodoo.public_dns
 }
