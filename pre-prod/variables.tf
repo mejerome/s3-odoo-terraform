@@ -29,3 +29,7 @@ variable "key_file" {
 variable "hosted_zone_id" {
   default = "Z1PSEXSC6MXGQ4"
 }
+
+variable "hosted_zone_name" {
+  description = "Hosted zone name"
+}
