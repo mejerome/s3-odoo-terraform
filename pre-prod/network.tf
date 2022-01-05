@@ -18,9 +18,8 @@ resource "aws_internet_gateway" "igw" {
   }
 }
 
-
 resource "aws_subnet" "public" {
-  count             = 3
+  count             = length(data.aws_availability_zones.available.names)
   vpc_id            = aws_vpc.vpc.id
   cidr_block        = "10.20.${10 + count.index}.0/24"
   availability_zone = element(data.aws_availability_zones.available.names, count.index)
@@ -43,7 +42,7 @@ resource "aws_route_table" "public" {
 }
 
 resource "aws_route_table_association" "public" {
-  count          = 3
+  count          = length(data.aws_availability_zones.available.names)
   subnet_id      = element(aws_subnet.public.*.id, count.index)
   route_table_id = aws_route_table.public.id
 }
@@ -52,6 +51,7 @@ resource "aws_network_interface" "odoo_nic" {
   subnet_id      = aws_subnet.public.0.id
   security_groups = [
     aws_security_group.allow_http.id,
+    aws_security_group. allow_https.id,
     aws_security_group.allow_ssh.id,
   ]
   tags = {

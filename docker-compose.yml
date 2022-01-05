@@ -13,9 +13,6 @@ services:
     build: .
     ports:
       - '80:8069'
-    volumes:
-      - 'odoo_data:/bitnami/odoo'
-      - './custom_addons:/opt/bitnami/odoo/custom_addons'
     depends_on:
       - postgresql
     environment:
@@ -27,6 +24,4 @@ services:
       - ODOO_DATABASE_NAME=bitnami_odoo
 volumes:
   postgresql_data:
-    driver: local
-  odoo_data:
     driver: local

@@ -24,15 +24,15 @@ resource "aws_security_group" "allow_http" {
   }
 }
 
-resource "aws_security_group" "allow_elb" {
-  name        = "allow_elb"
-  description = "Allow elb inbound traffic"
+resource "aws_security_group" "allow_https" {
+  name        = "allow_https"
+  description = "Allow https inbound traffic"
   vpc_id      = aws_vpc.vpc.id
 
   ingress {
-    description = "elb from VPC"
-    from_port   = 80
-    to_port     = 80
+    description = "https from VPC"
+    from_port   = 443
+    to_port     = 443
     protocol    = "tcp"
     cidr_blocks = ["0.0.0.0/0"]
 

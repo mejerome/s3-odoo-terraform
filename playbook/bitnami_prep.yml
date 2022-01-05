@@ -23,6 +23,14 @@
       with_items:
           - /home/bitnami/odoo_backup
           - /home/bitnami/odoo_restore
+    
+    - name: Copy custom_addons directory
+      copy:
+        src: "../custom_addons"
+        dest: "/home/bitnami/custom_addons"
+        owner: bitnami
+        group: odoo
+        mode: 0775
 
     - name: Change odoo admin password in odoo.conf
       lineinfile:
@@ -38,12 +46,10 @@
         backup: yes
 
     - name: Ensure python modules are installed
-      pip:
-        name: ['boto3', 'botocore', 'awscli', 'paramiko', 'dropbox']
-        state: latest
+      shell: "/opt/bitnami/odoo/venv/bin/python3 -m pip install dropbox botocore awscli boto3 paramiko"
 
     - name: Simple GET operation to download latest restore db
-      shell: "aws s3 cp s3://ssx-postgres-backups/ssx-restore/restore.zip /home/bitnami/odoo_restore/restore.zip"
+      shell: "aws s3 cp s3://ssx-postgres-backups/ssx-backups/restore.zip /home/bitnami/odoo_restore/restore.zip"
       become_user: bitnami
       args:
         creates: /home/bitnami/odoo_restore/restore.zip   
