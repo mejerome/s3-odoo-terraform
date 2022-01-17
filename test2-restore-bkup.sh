@@ -1,7 +1,7 @@
 #!/bin/bash
 # variables
 BACKUP_DIR=/home/bitnami/odoo_backup
-ODOO_DB=ssx-base-db
+ODOO_DB=test2-restore
 ADMIN_PASSWORD=bitnami
 
 curl -X POST -F 'master_pwd=${ADMIN_PASSWORD}' \

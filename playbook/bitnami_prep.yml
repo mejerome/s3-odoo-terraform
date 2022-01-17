@@ -48,52 +48,28 @@
     - name: Ensure python modules are installed
       shell: "/opt/bitnami/odoo/venv/bin/python3 -m pip install dropbox botocore awscli boto3 paramiko"
 
-    - name: Simple GET operation to download latest restore db
-      shell: "aws s3 cp s3://ssx-postgres-backups/ssx-backups/restore.zip /home/bitnami/odoo_restore/restore.zip"
-      become_user: bitnami
-      args:
-        creates: /home/bitnami/odoo_restore/restore.zip   
-
-    - name: Delete existing odoo database
-      shell: "curl -F 'master_pwd={{ odoo_admin_password }}' -F 'name=ssx-base-db' http://localhost:8069/web/database/drop"
-      ignore_errors: yes
-
-    - name: Restore odoo db from zip file
-      shell: "curl -F 'master_pwd={{ odoo_admin_password }}' -F backup_file=@/home/bitnami/odoo_restore/restore.zip -F 'copy=true' -F 'name=ssx-base-db' http://localhost:8069/web/database/restore"
-
     - name: Stop and disable timesyncd
       shell: "systemctl stop systemd-timesyncd; systemctl disable systemd-timesyncd"
 
     - name: Ensure chrony is present
       apt:  name=chrony state=present
 
-    - name: Restart chrony
-      shell: "/etc/init.d/chrony restart"
-
-
     - name: Restart all odoo related services
       shell: "/opt/bitnami/ctlscript.sh restart"
+
+    - name: Copy backup script
+      copy:
+        src: "../ssx-base-bkup.sh"
+        dest: "/home/bitnami/ssx-base-bkup.sh"
+        owner: bitnami
+        group: odoo
+        mode: 0775    
 
     - name: Add cron job to backup odoo
       cron:
         name: backup_odoo
         user: bitnami
         hour: '*/6'
-        job: "curl -X POST -F 'master_pwd={{ odoo_admin_password }}' -F 'name=ssx-base-db' -F 'backup_format=zip' -o /home/bitnami/odoo_backup/ssx-base-db-$(date +%Y.%m.%d-%H.%M).zip http://localhost:8069/web/database/backup"
+        job: "/opt/bitnami/odoo/ssx-base-db-bkup.sh"
         state: present
-
-    - name: Make a restore file from latest backup
-      cron:
-        name: make_restore_file
-        user: bitnami
-        hour: '*/12'
-        job: "cd /home/bitnami/odoo_backup; cp $(ls -t | head -1) restore.zip"
-        state: present
-
-    - name: Add cron job to sync backup with s3
-      cron:
-        name: backup_sync
-        user: bitnami
-        hour: '*/6'
-        job: "aws s3 sync /home/bitnami/odoo_backup s3://ssx-postgres-backups/ssx-backups"
 
