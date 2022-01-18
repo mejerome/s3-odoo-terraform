@@ -18,16 +18,18 @@ resource "aws_instance" "ssxodoo" {
   provisioner "remote-exec" {
     inline = [
       "sudo apt-get update",
-      "sudo apt-get install -y python3-pip ansible",
+      "sudo apt-get install -y python3-pip git ansible",
+      "git clone https://github.com/mejerome/s3-odoo-terraform.git",
+      "ansible-playbook s3-odoo-terraform/playbook/bitnami_prep.yml",
     ]
   }
-  connection {
-    type        = "ssh"
-    user        = "bitnami"
-    private_key = file(var.key_file)
-    host        = self.public_ip
-  }
-  provisioner "local-exec" {
-    command = "sleep 120; ANSIBLE_HOST_KEY_CHECKING=False ansible-playbook -u bitnami --private-key ${var.key_file} -i '${self.public_ip},' ../playbook/bitnami_prep.yml"
-  }
+  # connection {
+  #   type        = "ssh"
+  #   user        = "bitnami"
+  #   private_key = file(var.key_file)
+  #   host        = self.public_ip
+  # }
+  # provisioner "local-exec" {
+  #   command = "sleep 120; ANSIBLE_HOST_KEY_CHECKING=False ansible-playbook -u bitnami --private-key ${var.key_file} -i '${self.public_ip},' ../playbook/bitnami_prep.yml"
+  # }
 }
