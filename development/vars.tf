@@ -6,20 +6,12 @@ variable "region" {
   default = "eu-central-1"
 }
 
-variable "web_availability_zone" {
-  default = "eu-central-1a"
+variable "cluster_name" {
+  description = "value of the cluster name"
 }
 
-variable "app_availability_zone_1" {
-  default = "eu-central-1b"
-}
-
-variable "app_availability_zone_2" {
-  default = "eu-central-1c"
-}
-
-variable "odoo_ami" {
-  default = "ami-082a406c73ae55324" # ami-060bf7f5257d9bd73
+variable "odoo_app_image" {
+  description = "value of the odoo app image"
 }
 
 variable "key_name" {
@@ -39,17 +31,38 @@ variable "hosted_zone_id" {
 }
 
 variable "vpc_cidr_block" {
-  default = "10.22.0.0/16"
+  type        = string
+  description = "value of the VPC CIDR block"
 }
 
 variable "public_subnet_cidr" {
-  default = "10.22.1.0/24"
+  type        = list(any)
+  description = "CIDR blocks for public subnets"
 }
 
-variable "private_subnet_cidr" {
-  default = "10.22.2.0/24"
+variable "odoo_db_name" {
+  type        = string
+  description = "value of the odoo database name"
 }
 
-variable "private_subnet2_cidr" {
-  default = "10.22.3.0/24"
+variable "odoo_db_user" {
+  type        = string
+  description = "value of the odoo database user"
+}
+
+variable "db_password" {
+  type        = string
+  description = "value of the odoo database password"
+}
+
+variable "max_instance_size" {
+  description = "value of the max instance size"
+}
+
+variable "min_instance_size" {
+  description = "value of the min instance size"
+}
+
+variable "desired_capacity" {
+  description = "value of the desired capacity"
 }
