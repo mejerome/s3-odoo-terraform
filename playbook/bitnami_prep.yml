@@ -59,8 +59,8 @@
 
     - name: Copy backup script
       copy:
-        src: "../ssx-base-bkup.sh"
-        dest: "/home/bitnami/ssx-base-bkup.sh"
+        src: "../ssx-base-db-bkup.sh"
+        dest: "/home/bitnami/ssx-base-db-bkup.sh"
         owner: bitnami
         group: odoo
         mode: 0775    

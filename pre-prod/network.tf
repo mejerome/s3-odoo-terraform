@@ -48,10 +48,10 @@ resource "aws_route_table_association" "public" {
 }
 
 resource "aws_network_interface" "odoo_nic" {
-  subnet_id      = aws_subnet.public.0.id
+  subnet_id = aws_subnet.public.0.id
   security_groups = [
     aws_security_group.allow_http.id,
-    aws_security_group. allow_https.id,
+    aws_security_group.allow_https.id,
     aws_security_group.allow_ssh.id,
   ]
   tags = {

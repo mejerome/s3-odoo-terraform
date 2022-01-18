@@ -33,3 +33,8 @@ variable "hosted_zone_id" {
 variable "hosted_zone_name" {
   description = "Hosted zone name"
 }
+
+variable "root_volume_size" {
+  description = "Size of root volume in GB"
+  default     = "100"
+}
