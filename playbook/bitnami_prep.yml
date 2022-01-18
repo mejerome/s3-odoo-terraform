@@ -1,5 +1,6 @@
 ---
-- hosts: all
+- hosts: localhost
+  connection: local
   become: yes
 
   vars_files:
@@ -24,13 +25,13 @@
           - /home/bitnami/odoo_backup
           - /home/bitnami/odoo_restore
     
-    - name: Copy custom_addons directory
-      copy:
-        src: "../custom_addons"
-        dest: "/home/bitnami/custom_addons"
-        owner: bitnami
-        group: odoo
-        mode: 0775
+    # - name: Copy custom_addons directory
+    #   copy:
+    #     src: "../custom_addons"
+    #     dest: "/home/bitnami/custom_addons"
+    #     owner: bitnami
+    #     group: odoo
+    #     mode: 0775
 
     - name: Change odoo admin password in odoo.conf
       lineinfile:
@@ -42,7 +43,7 @@
       lineinfile:
         path: /opt/bitnami/odoo/conf/odoo.conf
         regexp: '^addons_path'
-        line: 'addons_path = /opt/bitnami/odoo/addons,/home/bitnami/custom_addons'
+        line: 'addons_path = /opt/bitnami/odoo/addons,/home/bitnami/s3-odoo-terraform/custom_addons'
         backup: yes
 
     - name: Ensure python modules are installed
@@ -57,19 +58,19 @@
     - name: Restart all odoo related services
       shell: "/opt/bitnami/ctlscript.sh restart"
 
-    - name: Copy backup script
-      copy:
-        src: "../ssx-base-db-bkup.sh"
-        dest: "/home/bitnami/ssx-base-db-bkup.sh"
-        owner: bitnami
-        group: odoo
-        mode: 0775    
+    # - name: Copy backup script
+    #   copy:
+    #     src: "../ssx-base-db-bkup.sh"
+    #     dest: "/home/bitnami/ssx-base-db-bkup.sh"
+    #     owner: bitnami
+    #     group: odoo
+    #     mode: 0775    
 
     - name: Add cron job to backup odoo
       cron:
         name: backup_odoo
         user: bitnami
         hour: '*/6'
-        job: "/opt/bitnami/odoo/ssx-base-db-bkup.sh"
+        job: "/opt/bitnami/s3-odoo-terraform/ssx-base-db-bkup.sh"
         state: present
 
