@@ -23,8 +23,7 @@ resource "aws_backup_selection" "ssx-backup-selection" {
   name         = "ssx-backup-resources"
   selection_tag {
     type  = "STRINGEQUALS"
-    key   = "Backup"
-    value = "true"
+    key   = "backup"
+    value = "True"
   }
 }
-
