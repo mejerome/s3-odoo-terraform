@@ -29,6 +29,6 @@ resource "aws_instance" "ssxodoo" {
     host        = self.public_ip
   }
   tags = {
-    "Name" = var.rg_name
+    "Name" = var.tag_name
   }
 }
