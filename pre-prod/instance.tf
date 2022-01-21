@@ -1,4 +1,3 @@
-
 resource "aws_instance" "ssxodoo" {
   ami                  = var.image_id
   instance_type        = var.instance_type
@@ -14,7 +13,7 @@ resource "aws_instance" "ssxodoo" {
     network_interface_id = aws_network_interface.odoo_nic.id
     device_index         = 0
   }
-  monitoring = true
+  # monitoring = true
   provisioner "remote-exec" {
     inline = [
       "sudo apt-get update",
@@ -29,7 +28,7 @@ resource "aws_instance" "ssxodoo" {
     private_key = file(var.key_file)
     host        = self.public_ip
   }
-  # provisioner "local-exec" {
-  #   command = "sleep 120; ANSIBLE_HOST_KEY_CHECKING=False ansible-playbook -u bitnami --private-key ${var.key_file} -i '${self.public_ip},' ../playbook/bitnami_prep.yml"
-  # }
+  tags = {
+    "Name" = var.rg_name
+  }
 }
