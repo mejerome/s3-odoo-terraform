@@ -58,19 +58,11 @@
     - name: Restart all odoo related services
       shell: "/opt/bitnami/ctlscript.sh restart"
 
-    # - name: Copy backup script
-    #   copy:
-    #     src: "../ssx-base-db-bkup.sh"
-    #     dest: "/home/bitnami/ssx-base-db-bkup.sh"
-    #     owner: bitnami
-    #     group: odoo
-    #     mode: 0775    
-
     - name: Add cron job to backup odoo
       cron:
         name: backup_odoo
         user: bitnami
         hour: '*/6'
-        job: "/opt/bitnami/s3-odoo-terraform/ssx-base-db-bkup.sh"
+        job: "./home/bitnami/s3-odoo-terraform/ssx-base-db-bkup.sh"
         state: present
 

@@ -15,6 +15,8 @@ services:
       - '80:8069'
     depends_on:
       - postgresql
+    volumes:
+      - './custom_addons:/opt/bitnami/odoo'
     environment:
       # ALLOW_EMPTY_PASSWORD is recommended only for development.
       - ALLOW_EMPTY_PASSWORD=yes
