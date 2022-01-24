@@ -9,6 +9,16 @@
       "database": "odoo_base",
       "username": "odoo",
       "password": "odoo"
+    },
+    {
+      "previewLimit": 50,
+      "server": "odoodatabase.c8wvdvkuvq0x.eu-central-1.rds.amazonaws.com",
+      "port": 5432,
+      "driver": "PostgreSQL",
+      "name": "rds",
+      "database": "postgres",
+      "username": "odoouser",
+      "password": "sLRXoul6FfeYSl7AzmrE"
     }
   ]
 }
