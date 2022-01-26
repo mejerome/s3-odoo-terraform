@@ -1,12 +1,3 @@
-tag_name           = "tf-ssx-test"
-region             = "eu-central-1"
-cluster_name       = "odoo-cluster"
-vpc_cidr_block     = "10.22.0.0/16"
-public_subnet_cidr = ["10.22.1.0/24", "10.22.2.0/24"]
-odoo_app_image     = "bitnami/odoo:15"
-odoo_db_name       = "odoodb"
-odoo_db_user       = "odoo"
-db_password        = "secretpassword"
-max_instance_size  = 3
-min_instance_size  = 1
-desired_capacity   = 1
+tag_name = "ssx-dev"
+db_username = "odoouser"
+db_password = "sLRXoul6FfeYSl7AzmrE"

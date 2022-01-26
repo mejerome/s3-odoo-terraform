@@ -1,59 +1,37 @@
-provider "aws" {
-  profile = "default"
-  region  = var.region
+terraform {
+  required_providers {
+    aws = {
+      source  = "hashicorp/aws"
+      version = ">= 3.20.0"
+    }
+  }
 }
 
-# resource "aws_network_interface" "odoo_nic" {
-#   subnet_id = aws_subnet.web-subnet.id
-#   security_groups = [
-#     aws_security_group.ssh_sg.id,
-#     aws_security_group.odoo_sg.id,
-#     aws_security_group.https_sg.id,
-#     aws_security_group.ntpd_sg.id,
-#   ]
+provider "aws" {
+  region = "eu-central-1"
+}
 
-#   tags = {
-#     Name = "primary_network_interface"
-#   }
-# }
+resource "aws_db_parameter_group" "odoo" {
+  name   = "odoo"
+  family = "postgres12"
 
-# resource "aws_instance" "odoo" {
-#   ami           = var.odoo_ami
-#   instance_type = var.instance_type
-#   key_name      = var.key_name
+  parameter {
+    name  = "log_connections"
+    value = "1"
+  }
+}
 
-#   network_interface {
-#     network_interface_id = aws_network_interface.odoo_nic.id
-#     device_index         = 0
-#   }
-
-#   connection {
-#     type        = "ssh"
-#     user        = "bitnami"
-#     private_key = file(var.key_file)
-#     host        = self.public_ip
-#   }
-
-#   provisioner "local-exec" {
-#     command = "sleep 120; ANSIBLE_HOST_KEY_CHECKING=False ansible-playbook -u bitnami --private-key ${var.key_file} -i '${self.public_ip},' ../playbook/bitnami_prep.yml"
-#   }
-
-#   tags = {
-#     Name = "Odoo-Server"
-#   }
-# }
-
-resource "aws_route53_record" "ssxodoo" {
-  zone_id = var.hosted_zone_id
-  name    = "ssxodoo.sysloggh.com"
-  type    = "CNAME"
-  ttl     = "300"
-
-  records = [
-    aws_alb.odoo_alb_load_balancer.dns_name,
-  ]
-
-  depends_on = [
-    aws_alb.odoo_alb_load_balancer,
-  ]
+resource "aws_db_instance" "odoo-db" {
+  identifier             = "odoodatabase"
+  instance_class         = "db.t2.micro"
+  allocated_storage      = 5
+  engine                 = "postgres"
+  engine_version         = "12.5"
+  username               = var.db_username
+  password               = var.db_password
+  db_subnet_group_name   = aws_db_subnet_group.odoo-db.name
+  vpc_security_group_ids = [aws_security_group.rds.id]
+  parameter_group_name   = aws_db_parameter_group.odoo.name
+  publicly_accessible    = true
+  skip_final_snapshot    = true
 }

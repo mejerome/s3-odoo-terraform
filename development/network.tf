@@ -1,54 +1,45 @@
 data "aws_availability_zones" "available" {}
 
-resource "aws_vpc" "ssx-vpc" {
-  cidr_block           = var.vpc_cidr_block
+module "vpc" {
+  source  = "terraform-aws-modules/vpc/aws"
+  version = "2.77.0"
+
+  name                 = "odoo-vpc"
+  cidr                 = "10.0.0.0/16"
+  azs                  = data.aws_availability_zones.available.names
+  public_subnets       = ["10.0.4.0/24", "10.0.5.0/24", "10.0.6.0/24"]
   enable_dns_hostnames = true
   enable_dns_support   = true
+}
+
+resource "aws_db_subnet_group" "odoo-db" {
+  name       = "db subnet group"
+  subnet_ids = module.vpc.public_subnets
 
   tags = {
     Name = var.tag_name
   }
 }
 
-resource "aws_subnet" "web-subnet-1" {
-  vpc_id                  = aws_vpc.ssx-vpc.id
-  cidr_block              = var.public_subnet_cidr[0]
-  map_public_ip_on_launch = true
-  availability_zone       = data.aws_availability_zones.available.names[0]
+resource "aws_security_group" "rds" {
+  name   = "odoo_rds"
+  vpc_id = module.vpc.vpc_id
+
+  ingress {
+    from_port   = 5432
+    to_port     = 5432
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  egress {
+    from_port   = 5432
+    to_port     = 5432
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
 
   tags = {
     Name = var.tag_name
   }
 }
-
-resource "aws_subnet" "web-subnet-2" {
-  vpc_id                  = aws_vpc.ssx-vpc.id
-  cidr_block              = var.public_subnet_cidr[1]
-  map_public_ip_on_launch = true
-  availability_zone       = data.aws_availability_zones.available.names[1]
-
-  tags = {
-    Name = var.tag_name
-  }
-}
-# resource "aws_subnet" "private-subnet-1" {
-#   vpc_id                  = aws_vpc.ssx-vpc.id
-#   cidr_block              = var.private_subnet2_cidr[0]
-#   map_public_ip_on_launch = false
-#   availability_zone       = data.aws_availability_zones.available.names[0]
-
-#   tags = {
-#     Name = var.tag_name
-#   }
-# }
-
-# resource "aws_subnet" "private-subnet-2" {
-#   vpc_id                  = aws_vpc.ssx-vpc.id
-#   cidr_block              = var.private_subnet_cidr
-#   map_public_ip_on_launch = false
-#   availability_zone       = var.app_availability_zone_2
-
-#   tags = {
-#     Name = var.tag_name
-#   }
-# }
