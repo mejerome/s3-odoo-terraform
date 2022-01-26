@@ -63,6 +63,6 @@
         name: backup_odoo
         user: bitnami
         hour: '*/6'
-        job: "./home/bitnami/s3-odoo-terraform/ssx-base-db-bkup.sh"
+        job: "~/s3-odoo-terraform/ssx-base-db-bkup.sh"
         state: present
 
