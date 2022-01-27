@@ -47,7 +47,7 @@
         backup: yes
 
     - name: Ensure python modules are installed
-      shell: "/opt/bitnami/odoo/venv/bin/python3 -m pip install dropbox botocore awscli boto3 paramiko"
+      shell: "pip3 install dropbox botocore awscli boto3 paramiko"
 
     - name: Stop and disable timesyncd
       shell: "systemctl stop systemd-timesyncd; systemctl disable systemd-timesyncd"
