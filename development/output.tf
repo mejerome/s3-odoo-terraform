@@ -12,3 +12,8 @@ output "rds_username" {
   description = "RDS instance root username"
   value       = aws_db_instance.odoo-db.username
 }
+
+output "odoo_instance_dns" {
+  description = "Odoo instance DNS"
+  value       = aws_instance.odoo-app.public_dns
+}

@@ -1,3 +1,5 @@
-tag_name = "ssx-dev"
+tag_name    = "ssx-dev"
 db_username = "odoouser"
 db_password = "sLRXoul6FfeYSl7AzmrE"
+region      = "us-east-1"
+odoo_ami    = "ami-0e3d3dd44c20f16f2"
