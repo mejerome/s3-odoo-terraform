@@ -31,3 +31,13 @@ variable "key_name" {
 variable "key_file" {
   default = "../../odoo-key.pem"
 }
+
+variable "hosted_zone_id" {
+  type        = string
+  description = "AWS DNS zone name"
+}
+
+variable "hosted_zone_name" {
+  type        = string
+  description = "AWS DNS zone name"
+}

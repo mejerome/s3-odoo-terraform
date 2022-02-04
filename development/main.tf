@@ -46,7 +46,7 @@ resource "aws_db_instance" "odoo-db" {
   db_subnet_group_name   = aws_db_subnet_group.odoo-db.name
   vpc_security_group_ids = [aws_security_group.rds.id]
   parameter_group_name   = aws_db_parameter_group.odoo.name
-  publicly_accessible    = true
+  publicly_accessible    = false
   skip_final_snapshot    = true
 }
 

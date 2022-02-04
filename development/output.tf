@@ -17,3 +17,8 @@ output "odoo_instance_dns" {
   description = "Odoo instance DNS"
   value       = aws_instance.odoo-app.public_dns
 }
+
+output "odoo_url" {
+  description = "Odoo instance URL"
+  value       = aws_route53_record.ssxodoo.name
+}
