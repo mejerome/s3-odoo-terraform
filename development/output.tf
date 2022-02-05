@@ -22,3 +22,8 @@ output "odoo_url" {
   description = "Odoo instance URL"
   value       = aws_route53_record.ssxodoo.name
 }
+
+output "lb_url" {
+  description = "Odoo load balancer URL"
+  value       = aws_lb.odoo-lb.dns_name
+}

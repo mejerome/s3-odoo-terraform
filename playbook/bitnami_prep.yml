@@ -46,6 +46,12 @@
         line: 'addons_path = /opt/bitnami/odoo/addons,/home/bitnami/s3-odoo-terraform/custom_addons'
         backup: yes
 
+    - name: Update db_filter setting in odoo.conf
+      lineinfile:
+        path: /opt/bitnami/odoo/conf/odoo.conf
+        regexp: '^db_filter'
+        line: "dbfilter = ^%d$"
+
     - name: Ensure python modules are installed
       shell: "pip3 install dropbox botocore awscli boto3 paramiko"
 
@@ -62,7 +68,7 @@
       cron:
         name: backup_odoo
         user: bitnami
-        hour: '*/6'
+        day: '0'
         job: "~/s3-odoo-terraform/ssx-base-db-bkup.sh"
         state: present
 

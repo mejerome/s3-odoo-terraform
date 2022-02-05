@@ -78,6 +78,10 @@ resource "aws_instance" "odoo-app" {
   provisioner "local-exec" {
     command = "sleep 120; ANSIBLE_HOST_KEY_CHECKING=False ansible-playbook -u bitnami --private-key ${var.key_file} -i '${self.public_ip},' ./dbcred.yml"
   }
+
+  depends_on = [
+    aws_db_instance.odoo-db,
+  ]
   tags = {
     "Name" = var.tag_name
   }
