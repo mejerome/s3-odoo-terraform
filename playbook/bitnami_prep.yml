@@ -23,7 +23,6 @@
         mode: 0775
       with_items:
           - /home/bitnami/odoo_backup
-          - /home/bitnami/odoo_restore
 
     - name: Change odoo admin password in odoo.conf
       lineinfile:
