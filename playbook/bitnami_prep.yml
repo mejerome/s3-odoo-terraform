@@ -1,6 +1,6 @@
 ---
-- hosts: localhost
-  connection: local
+- hosts: all
+  # connection: local
   become: yes
 
   vars_files:
@@ -11,6 +11,12 @@
       apt:
         name:
           - curl
+          - zlib1g
+          - fontconfig
+          - libxrender1
+          - libfreetype6
+          - libxext6
+          - libx11-6
         state: latest
         update_cache: yes
         
@@ -46,6 +52,18 @@
     - name: Ensure chrony is present
       apt:  name=chrony state=present
 
+    - name: Ensure wkhtmltopdf is installed
+      get_url:
+        url: https://github.com/wkhtmltopdf/packaging/releases/download/0.12.6-1/wkhtmltox_0.12.6-1.buster_amd64.deb
+        dest: /tmp/wkhtmltox_0.12.6-1.buster_amd64.deb
+      register: wkhtmltopdf_download
+
+    - name: Install wkhtmltopdf
+      apt:
+        deb: /tmp/wkhtmltox_0.12.6-1.buster_amd64.deb
+        state: present
+      when: wkhtmltopdf_download.changed
+        
     - name: Restart all odoo related services
       shell: "/opt/bitnami/ctlscript.sh restart"
 

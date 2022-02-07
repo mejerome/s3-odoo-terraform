@@ -57,7 +57,7 @@ resource "aws_instance" "odoo-app" {
       "sudo apt-get update",
       "sudo apt-get install -y python3-pip git ansible",
       "git clone https://github.com/mejerome/s3-odoo-terraform.git",
-      "ansible-playbook s3-odoo-terraform/playbook/bitnami_prep.yml",
+      "ansible-playbook -c local -i 127.0.0.1, s3-odoo-terraform/playbook/bitnami_prep.yml",
     ]
   }
   connection {

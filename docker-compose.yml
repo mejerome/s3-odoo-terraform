@@ -9,8 +9,10 @@ services:
     volumes:
       - ./config:/etc/odoo
       - ./custom_addons:/mnt/extra-addons
+  
+  db:
+    image: postgres:13
     environment:
-    - HOST=odoodatabase.c8wvdvkuvq0x.eu-central-1.rds.amazonaws.com
-    - DB_NAME=postgres
-    - USER=odoouser
-
+      - POSTGRES_DB=postgres
+      - POSTGRES_PASSWORD=odoo
+      - POSTGRES_USER=odoo
