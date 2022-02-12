@@ -38,8 +38,13 @@ resource "aws_db_instance" "odoo-db" {
   vpc_security_group_ids = [aws_security_group.rds.id]
   parameter_group_name   = aws_db_parameter_group.odoo.name
   publicly_accessible    = false
-  skip_final_snapshot    = true
+  skip_final_snapshot    = false
   multi_az               = true
+  backup_retention_period = 7
+
+  tags = {
+    "Name" = var.tag_name
+  }
 }
 
 resource "aws_instance" "odoo-app" {
