@@ -34,13 +34,13 @@ resource "aws_lb_listener" "redirect" {
   port              = "80"
   protocol          = "HTTP"
   default_action {
-      type = "redirect"
+    type = "redirect"
 
-      redirect {
-        port        = "443"
-        protocol    = "HTTPS"
-        status_code = "HTTP_301"
-      }
+    redirect {
+      port        = "443"
+      protocol    = "HTTPS"
+      status_code = "HTTP_301"
+    }
   }
 
   depends_on = [
