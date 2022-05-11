@@ -53,10 +53,3 @@ resource "aws_acm_certificate_validation" "ssx" {
   }
 }
 
-# resource "aws_acm_certificate_validation" "ssxfinance" {
-#   certificate_arn         = aws_acm_certificate.ssxfinance.arn
-
-#   lifecycle {
-#     create_before_destroy = true
-#   }
-# }
