@@ -52,14 +52,12 @@ resource "aws_instance" "odoo-app" {
   key_name             = var.key_name
   iam_instance_profile = "ec2_s3_access"
 
-  ebs_block_device {
-    delete_on_termination = false
-  }
+
   network_interface {
     network_interface_id = aws_network_interface.odoo_nic.id
     device_index         = 0
   }
-  # monitoring = true
+  monitoring = true
   provisioner "remote-exec" {
     inline = [
       "sudo apt-get update",

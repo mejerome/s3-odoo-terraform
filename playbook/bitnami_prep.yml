@@ -51,6 +51,7 @@
 
     - name: Ensure chrony is present
       apt:  name=chrony state=present
+      update_cache: yes
 
     - name: Ensure wkhtmltopdf is installed
       get_url:

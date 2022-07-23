@@ -17,7 +17,7 @@ resource "aws_lb_listener" "front_end" {
   port              = "443"
   protocol          = "HTTPS"
   ssl_policy        = "ELBSecurityPolicy-2016-08"
-  certificate_arn   = aws_acm_certificate.ssx.arn
+  certificate_arn   = aws_acm_certificate.ssxfinance.arn
 
   default_action {
     type             = "forward"
@@ -25,7 +25,7 @@ resource "aws_lb_listener" "front_end" {
   }
 
   depends_on = [
-    aws_acm_certificate.ssx,
+    aws_acm_certificate.ssxfinance,
   ]
 }
 

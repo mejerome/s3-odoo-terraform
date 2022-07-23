@@ -18,10 +18,10 @@ output "odoo_instance_dns" {
   value       = aws_instance.odoo-app.public_dns
 }
 
-output "odoo_url" {
-  description = "Odoo instance URL"
-  value       = aws_route53_record.ssxodoo.name
-}
+# output "odoo_url" {
+#   description = "Odoo instance URL"
+#   value       = aws_route53_record.ssxodoo.name
+# }
 
 output "lb_url" {
   description = "Odoo load balancer URL"
