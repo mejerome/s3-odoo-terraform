@@ -30,3 +30,4 @@ override.tf.json
 # example: *tfplan*
 development/tf_ansible_vars_file.yml
 development/terraform.tfvars
+playbook/variables.yml

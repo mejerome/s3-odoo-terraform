@@ -40,6 +40,10 @@ resource "aws_db_instance" "odoo-db" {
   publicly_accessible    = false
   skip_final_snapshot    = true
   multi_az               = true
+  deletion_protection    = true
+  tags = {
+    "Name" = var.tag_name
+  }
 }
 
 resource "aws_instance" "odoo-app" {
@@ -47,6 +51,10 @@ resource "aws_instance" "odoo-app" {
   instance_type        = "t3.small"
   key_name             = var.key_name
   iam_instance_profile = "ec2_s3_access"
+
+  ebs_block_device {
+    delete_on_termination = false
+  }
   network_interface {
     network_interface_id = aws_network_interface.odoo_nic.id
     device_index         = 0

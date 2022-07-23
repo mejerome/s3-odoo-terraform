@@ -1,5 +1,5 @@
     ansible_python_interpreter: /usr/bin/python3
-    odoo_admin_password: "bitnami"
+    odoo_admin_password: "8v7erVp166&I5bC$3BP3"
     # odoo_db_host: ""
     # odoo_db_user: "ssxodooadmin"
     # odoo_db_password: "g9A:p7AK8zZuNmYG>Ky2"

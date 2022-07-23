@@ -1,44 +1,42 @@
 resource "aws_lb" "odoo-lb" {
-  name               = "ssx-odoo-lb"
+  name               = "odoo-dev-lb"
   internal           = false
   load_balancer_type = "application"
-  subnets            = module.vpc.public_subnets
-  security_groups    = [aws_security_group.odoo-https.id, aws_security_group.odoo-http.id]
-
-  enable_deletion_protection = false
+  subnets            = data.aws_subnets.ssx_public_subnets.ids
+  security_groups    = [aws_security_group.alb_sg.id]
 
   tags = {
-    Name = var.tag_name
+    Name = "odoo-dev"
   }
 }
 
-resource "aws_lb_listener" "front_end" {
-  load_balancer_arn = aws_lb.odoo-lb.arn
-  port              = "443"
-  protocol          = "HTTPS"
-  ssl_policy        = "ELBSecurityPolicy-2016-08"
-  certificate_arn   = aws_acm_certificate.ssx.arn 
-
-  default_action {
-    type             = "forward"
-    target_group_arn = aws_lb_target_group.odoo-tg.arn
-  }
-
-  depends_on = [
-    aws_acm_certificate.ssx,
-  ]
-}
-
-resource "aws_lb_target_group" "odoo-tg" {
-  name     = "ssx-odoo-lb-tg"
+resource "aws_lb_target_group" "target-group" {
+  name     = "odoo-app"
   port     = 80
   protocol = "HTTP"
-  vpc_id   = module.vpc.vpc_id
-  target_type = "instance"
+  target_type = "ip"
+  vpc_id   = data.aws_vpc.ssx-prod.id
+  health_check {
+    path                = "/"
+    interval            = "10"
+    port                = "80"
+    protocol            = "HTTP"
+    timeout             = "5"
+    healthy_threshold   = "2"
+    unhealthy_threshold = "2"
+    matcher             = "200-299"
+  }
+  tags = {
+    Name = "odoo-dev"
+  }
 }
 
-resource "aws_lb_target_group_attachment" "odoo-tg-attachment" {
-  target_group_arn = aws_lb_target_group.odoo-tg.arn
-  target_id        = aws_instance.odoo-app.id
-  port             = 80
+resource "aws_lb_listener" "listener" {
+  load_balancer_arn = aws_lb.odoo-lb.arn
+  port              = 80
+  protocol          = "HTTP"
+  default_action {
+    type             = "forward"
+    target_group_arn = aws_lb_target_group.target-group.arn
+  }
 }

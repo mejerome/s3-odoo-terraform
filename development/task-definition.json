@@ -1,0 +1,41 @@
+[
+  {
+    "essential": true,
+    "memory": 2048,
+    "name": "odoo-app",
+    "cpu": 1024,
+    "image": "public.ecr.aws/bitnami/odoo:15",
+    "environment": [
+      {
+        "name": "ODOO_DATABASE_HOST",
+        "value": "${data.aws_db_instance.odoo-db.address}"
+      },
+      {
+        "name": "ODOO_DATABASE_NAME",
+        "value": "${data.aws_db_instance.odoo-db.identifier}"
+      },
+      {
+        "name": "ODOO_DATABASE_USER",
+        "value": "${data.aws_db_instance.odoo-db.username}"
+      },
+      {
+        "name": "ODOO_DATABASE_PASSWORD",
+        "value": "${data.aws_db_instance.odoo-db.password}"
+      }
+    ],
+    "logConfiguration": {
+      "logDriver": "awslogs",
+      "options": {
+        "awslogs-group": "odoo-logs",
+        "awslogs-region": "us-east-1",
+        "awslogs-stream-prefix": "odoo-dev"
+      }
+    },
+    "portMappings": [
+      {
+        "containerPort": 80,
+        "hostPort": 80
+      }
+    ]
+  }
+]
