@@ -11,11 +11,11 @@ resource "aws_lb" "odoo-lb" {
 }
 
 resource "aws_lb_target_group" "target-group" {
-  name     = "odoo-app"
-  port     = 80
-  protocol = "HTTP"
+  name        = "odoo-app"
+  port        = 80
+  protocol    = "HTTP"
   target_type = "ip"
-  vpc_id   = data.aws_vpc.ssx-prod.id
+  vpc_id      = data.aws_vpc.ssx-prod.id
   health_check {
     path                = "/"
     interval            = "10"

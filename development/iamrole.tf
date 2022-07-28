@@ -4,7 +4,7 @@ data "aws_iam_policy_document" "ecs_agent_policy" {
 
     principals {
       type        = "Service"
-      identifiers = ["ecs-tasks.amazonaws.com"]
+      identifiers = ["ec2.amazonaws.com"]
     }
   }
 }

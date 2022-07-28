@@ -1,0 +1,34 @@
+---
+- hosts: all
+  become: yes
+
+  vars_files:
+    - tf_ansible_vars_file.yml
+
+  tasks:
+    - name: Update odoo db_host in odoo.conf
+      lineinfile:
+        path: /opt/bitnami/odoo/conf/odoo.conf
+        regexp: '^db_host'
+        line: "db_host  = {{ tf_db_host }}"
+
+    - name: Update odoo db_name in odoo.conf
+      lineinfile:
+        path: /opt/bitnami/odoo/conf/odoo.conf
+        regexp: '^db_name'
+        line: "db_name  = {{ tf_db_name }}"
+
+    - name: Update odoo db_user in odoo.conf
+      lineinfile:
+        path: /opt/bitnami/odoo/conf/odoo.conf
+        regexp: '^db_user'
+        line: "db_user  = {{ tf_db_user }}"
+
+    - name: Change odoo db_password in odoo.conf
+      lineinfile:
+        path: /opt/bitnami/odoo/conf/odoo.conf
+        regexp: '^db_password'
+        line: "db_password  = {{ tf_db_password }}"
+
+    - name: Restart all odoo related services
+      shell: "/opt/bitnami/ctlscript.sh restart"
