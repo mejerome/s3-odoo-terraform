@@ -1,7 +1,7 @@
 resource "aws_security_group" "allow_http" {
   name        = "allow_http"
   description = "Allow http inbound traffic"
-  vpc_id      = aws_vpc.vpc.id
+  vpc_id      = data.aws_vpc.ssx-prod.id
 
   ingress {
     description = "http from VPC"
@@ -27,7 +27,7 @@ resource "aws_security_group" "allow_http" {
 resource "aws_security_group" "allow_https" {
   name        = "allow_https"
   description = "Allow https inbound traffic"
-  vpc_id      = aws_vpc.vpc.id
+  vpc_id      = data.aws_vpc.ssx-prod.id
 
   ingress {
     description = "https from VPC"
@@ -53,7 +53,7 @@ resource "aws_security_group" "allow_https" {
 resource "aws_security_group" "allow_ssh" {
   name        = "allow_ssh"
   description = "Allow ssh inbound traffic"
-  vpc_id      = aws_vpc.vpc.id
+  vpc_id      = data.aws_vpc.ssx-prod.id
 
   ingress {
     description = "ssh from VPC"

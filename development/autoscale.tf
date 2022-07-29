@@ -5,8 +5,6 @@ resource "aws_launch_configuration" "ecs_launch_config" {
   user_data            = "#!/bin/bash\necho ECS_CLUSTER=doo-dev >> /etc/ecs/ecs.config"
   instance_type        = "t2.micro"
   key_name             = aws_key_pair.ecs.key_name
-  iam_instance_profile = aws_iam_instance_profile.ecs_agent.arn
-
 }
 
 resource "aws_autoscaling_group" "ecs_asg" {

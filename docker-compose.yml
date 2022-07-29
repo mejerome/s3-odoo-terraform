@@ -11,7 +11,7 @@ services:
       - ./custom_addons:/mnt/extra-addons
   
   db:
-    image: postgres:13
+    image: postgres:14
     environment:
       - POSTGRES_DB=postgres
       - POSTGRES_PASSWORD=odoo

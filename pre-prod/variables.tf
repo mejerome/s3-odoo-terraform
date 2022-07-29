@@ -38,3 +38,7 @@ variable "root_volume_size" {
   description = "Size of root volume in GB"
   default     = "100"
 }
+
+variable "db_password" {
+  description = "Database password"
+}
