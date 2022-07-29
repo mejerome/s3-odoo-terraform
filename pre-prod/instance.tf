@@ -12,9 +12,11 @@ resource "aws_instance" "ssxodoo" {
       export RDS_NAME=${data.aws_db_instance.odoo-db.db_name}
       sudo yum -y update 
       sudo amazon-linux-extras enable ansible2
-      sudo yum install -y git ansible 
-      ansible-galaxy install geerlingguy.docker geerlingguy.pip
-
+      sudo yum install -y git ansible
+      sudo amazon-linux-extras install docker
+      sudo service docker start
+      sudo chkconfig docker on
+      sudo usermod -a -G docker ec2-user
   EOF
 
   root_block_device {
@@ -27,22 +29,8 @@ resource "aws_instance" "ssxodoo" {
     network_interface_id = aws_network_interface.odoo_nic.id
     device_index         = 0
   }
+
   monitoring = true
-
-  provisioner "remote-exec" {
-    inline = [
-      "sleep 5m",
-      "git clone --branch odoo-docker https://github.com/mejerome/s3-odoo-terraform.git" ,
-      "ansible-playbook -c local -i 127.0.0.1, s3-odoo-terraform/playbook/install_docker.yml",
-    ]
-  }
-
-  connection {
-    type        = "ssh"
-    user        = "ec2-user"
-    private_key = file(var.key_file)
-    host        = self.public_ip
-  }
   tags = {
     "Name" = var.tag_name
   }
