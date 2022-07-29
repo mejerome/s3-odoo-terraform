@@ -31,3 +31,4 @@ override.tf.json
 development/tf_ansible_vars_file.yml
 development/terraform.tfvars
 playbook/variables.yml
+env_vars.sh
