@@ -5,3 +5,8 @@ output "instance_dns_name" {
 output "public_ip" {
   value = aws_instance.ssxodoo.public_ip
 }
+
+output "db_address" {
+  value = data.aws_db_instance.odoo-db.address
+}
+

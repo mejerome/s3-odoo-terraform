@@ -5,11 +5,7 @@ resource "aws_instance" "ssxodoo" {
   iam_instance_profile = "ec2_s3_access"
 
   user_data = <<EOF
-      #!/bin/bash
-      export RDS_HOST=${data.aws_db_instance.odoo-db.address}
-      export RDS_USER=${data.aws_db_instance.odoo-db.master_username}
-      export RDS_PASS=${var.db_password}
-      export RDS_NAME=${data.aws_db_instance.odoo-db.db_name}
+      #!/bin/bash     
       sudo yum -y update 
       sudo amazon-linux-extras enable ansible2
       sudo yum install -y git ansible

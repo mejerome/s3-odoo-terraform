@@ -5,14 +5,11 @@ services:
     depends_on:
       - db
     ports:
-      - "80:8069"
+      - "8069:8069"
     volumes:
       - ./config:/etc/odoo
       - ./custom_addons:/mnt/extra-addons
-  
-  db:
-    image: postgres:14
     environment:
-      - POSTGRES_DB=postgres
-      - POSTGRES_PASSWORD=odoo
-      - POSTGRES_USER=odoo
+      - HOST=$RDS_HOST
+      - USER=$RDS_USER
+      - PASSWORD=$RDS_PASSWORD
