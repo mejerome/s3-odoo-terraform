@@ -19,8 +19,8 @@ resource "aws_instance" "ssxodoo" {
       echo "export RDS_PASSWORD=${var.db_password}" >> /home/ec2-user/.bashrc
       echo "export RDS_NAME=${data.aws_db_instance.odoo-db.db_name}" >> /home/ec2-user/.bashrc
       sudo pip3 install docker-compose
-      git clone --branch odoo-docker https://github.com/mejerome/s3-odoo-terraform.git /tmp/s3-odoo-terraform
-      cd /tmp/s3-odoo-terraform && docker-compose up -d
+      git clone --branch odoo-docker https://github.com/mejerome/s3-odoo-terraform.git /home/ec2-user/s3-odoo-terraform
+      cd /home/ec2-user/s3-odoo-terraform && docker-compose up -d
   EOF
 
   root_block_device {
