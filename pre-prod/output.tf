@@ -13,3 +13,7 @@ output "db_address" {
 output "odoo_docker_lb_dns_name" {
   value = aws_lb.odoo-docker-lb.dns_name
 }
+
+output "hosted_zone_name" {
+  value = aws_route53_record.pre-prod.name
+}
