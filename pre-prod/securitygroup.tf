@@ -5,8 +5,8 @@ resource "aws_security_group" "allow_http" {
 
   ingress {
     description = "http from VPC"
-    from_port   = 80
-    to_port     = 80
+    from_port   = 8068
+    to_port     = 8068
     protocol    = "tcp"
     cidr_blocks = ["0.0.0.0/0"]
   }

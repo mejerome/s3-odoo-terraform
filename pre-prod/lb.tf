@@ -48,7 +48,6 @@ resource "aws_lb_target_group_attachment" "odoo-docker-tg-attachment" {
   port             = 8069
 }
 
-
 resource "aws_lb_listener" "syslog" {
   load_balancer_arn = aws_lb.odoo-docker-lb.arn
   port              = "80"

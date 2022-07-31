@@ -30,6 +30,7 @@ resource "aws_network_interface" "odoo_nic" {
   security_groups = [
     aws_security_group.allow_odoo.id,
     aws_security_group.allow_ssh.id,
+    aws_security_group.allow_syslog.id,
   ]
   tags = {
     Name = var.tag_name

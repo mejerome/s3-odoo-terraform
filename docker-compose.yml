@@ -16,10 +16,10 @@ services:
   syslog-odoo:
     image: odoo:15.0
     ports:
-      - "8068:8069"
+      - "80:8069"
     volumes:
       # - ./config:/etc/odoo
-      - ./custom_addons:/mnt/extra-addons
+      - ./custom_addons:/mnt/extra-addonssyslo
     environment:
       - HOST=${RDS_HOST}
       - USER=${RDS_USER}
