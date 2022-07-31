@@ -18,10 +18,10 @@ resource "aws_lb" "odoo-docker-lb" {
 
 resource "aws_lb_listener" "front_end" {
   load_balancer_arn = aws_lb.odoo-docker-lb.arn
-  port              = "80"
-  protocol          = "HTTP"
-  # ssl_policy        = "ELBSecurityPolicy-2016-08"
-  # certificate_arn   = aws_acm_certificate.ssxfinance.arn
+  port              = "443"
+  protocol          = "HTTPS"
+  ssl_policy        = "ELBSecurityPolicy-2016-08"
+  certificate_arn   = aws_acm_certificate.pre-prod.arn
 
   default_action {
     type             = "forward"
@@ -30,7 +30,7 @@ resource "aws_lb_listener" "front_end" {
 
   depends_on = [
     aws_instance.ssxodoo,
-    # aws_acm_certificate.ssxfinance,
+    aws_acm_certificate.pre-prod,
   ]
 }
 
