@@ -16,7 +16,7 @@ services:
   syslog-odoo:
     image: odoo:15.0
     ports:
-      - "80:8069"
+      - "8068:8069"
     volumes:
       # - ./config:/etc/odoo
       - ./custom_addons:/mnt/extra-addonssyslo
