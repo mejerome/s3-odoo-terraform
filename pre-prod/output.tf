@@ -9,11 +9,3 @@ output "public_ip" {
 output "db_address" {
   value = data.aws_db_instance.odoo-db.address
 }
-
-output "odoo_docker_lb_dns_name" {
-  value = aws_lb.odoo-docker-lb.dns_name
-}
-
-output "hosted_zone_name" {
-  value = aws_route53_record.pre-prod.name
-}
