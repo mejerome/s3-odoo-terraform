@@ -1,4 +1,4 @@
-version: '3.1'
+version: '3.9'
 services:
   ssx-odoo:
     image: odoo:15.0
@@ -26,6 +26,6 @@ services:
     ports:
       - "80:80"
     volumes:
-      - ./nginx:/etc/nginx/conf.d
+      - ./nginx:/etc/nginx/sites-enabled:ro
     depends_on:
       - ssx-odoo
