@@ -1,7 +1,11 @@
 version: '3.9'
+networks:
+  app-network:
+    driver: bridge
+
 services:
   ssx-odoo:
-    image: odoo:15.0
+    build: .
     depends_on:
       - db
     ports:
@@ -13,6 +17,8 @@ services:
     #   - HOST=${RDS_HOST}
     #   - USER=${RDS_USER}
     #   - PASSWORD=${RDS_PASSWORD}
+    networks:
+      - app-network
 
   db:
     image: postgres:13
@@ -20,12 +26,15 @@ services:
       - POSTGRES_DB=postgres
       - POSTGRES_PASSWORD=odoo
       - POSTGRES_USER=odoo
-
+    networks:
+      - app-network
   nginx-lb:
     image: nginx:latest
     ports:
       - "80:80"
     volumes:
-      - ./nginx:/etc/nginx/sites-enabled:ro
+      - ./nginx/default.conf:/etc/nginx/conf.d/default.conf:ro
     depends_on:
       - ssx-odoo
+    networks:
+      - app-network
