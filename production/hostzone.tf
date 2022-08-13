@@ -5,11 +5,11 @@ resource "aws_route53_record" "syslog" {
   ttl     = "300"
 
   records = [
-    aws_instance.ssxodoo.public_dns,
+    aws_instance.odoo-app.public_dns,
   ]
 
   depends_on = [
-    aws_instance.ssxodoo,
+    aws_instance.odoo-app,
   ]
 }
 
@@ -20,10 +20,11 @@ resource "aws_route53_record" "ssxodoo" {
   ttl     = "300"
 
   records = [
-    aws_instance.ssxodoo.public_dns,
+    aws_instance.odoo-app.public_dns,
   ]
 
   depends_on = [
-    aws_instance.ssxodoo,
+    aws_instance.odoo-app,
   ]
 }
+

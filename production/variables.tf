@@ -7,6 +7,11 @@ variable "odoo_ami" {
   description = "AMI ID"
   type        = string
 }
+
+variable "root_volume_size" {
+  description = "Root volume size"
+  default     = 100
+}
 variable "db_username" {
   type        = string
   description = "odoo database username"

@@ -21,6 +21,7 @@ resource "aws_instance" "ssxodoo" {
       sudo pip3 install docker-compose
       git clone --branch odoo-docker https://github.com/mejerome/s3-odoo-terraform.git /home/ec2-user/s3-odoo-terraform
       cd /home/ec2-user/s3-odoo-terraform && docker-compose up -d
+      sudo chown -R ec2-user ~/s3-odoo-terraform
   EOF
 
   root_block_device {

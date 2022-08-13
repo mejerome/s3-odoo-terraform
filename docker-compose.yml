@@ -20,6 +20,16 @@ services:
     networks:
       - app-network
 
+  syslog-odoo:
+    image: odoo:15.0
+    depends_on:
+      - db
+    ports:
+      - "8068:8069"
+    volumes:
+      - ./custom_addons:/mnt/extra-addons
+    networks:
+      - app-network
   db:
     image: postgres:13
     environment:
