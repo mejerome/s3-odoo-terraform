@@ -6,12 +6,9 @@ networks:
 services:
   ssx-odoo:
     build: .
-    # depends_on:
-    #   - db
     ports:
       - "8069:8069"
     volumes:
-      # - ./config:/etc/odoo
       - ./custom_addons:/mnt/extra-addons
     environment:
       - HOST=${RDS_HOST}
@@ -22,8 +19,6 @@ services:
 
   syslog-odoo:
     image: odoo:15.0
-    # depends_on:
-    #   - db
     ports:
       - "8068:8069"
     volumes:
@@ -34,21 +29,15 @@ services:
       - PASSWORD=${RDS_PASSWORD}
     networks:
       - app-network
-  # db:
-  #   image: postgres:13
-  #   environment:
-  #     - POSTGRES_DB=postgres
-  #     - POSTGRES_PASSWORD=odoo
-  #     - POSTGRES_USER=odoo
-  #   networks:
-  #     - app-network
+
   nginx-lb:
     image: nginx:latest
     ports:
       - "80:80"
     volumes:
-      - ./nginx/nginx.conf:/etc/nginx/nginx.conf:ro
+      - ./nginx/config:/etc/nginx/conf.d:ro
     depends_on:
       - ssx-odoo
+      - syslog-odoo
     networks:
       - app-network
