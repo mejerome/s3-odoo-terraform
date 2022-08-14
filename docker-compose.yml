@@ -1,7 +1,7 @@
 version: '3.9'
-networks:
-  app-network:
-    driver: bridge
+# networks:
+#   app-network:
+#     driver: bridge
 
 services:
   ssx-odoo:
@@ -14,8 +14,8 @@ services:
       - HOST=${RDS_HOST}
       - USER=${RDS_USER}
       - PASSWORD=${RDS_PASSWORD}
-    networks:
-      - app-network
+    # networks:
+    #   - app-network
 
   syslog-odoo:
     image: odoo:15.0
@@ -27,17 +27,17 @@ services:
       - HOST=${RDS_HOST}
       - USER=${RDS_USER}
       - PASSWORD=${RDS_PASSWORD}
-    networks:
-      - app-network
+    # networks:
+    #   - app-network
 
-  nginx-lb:
-    image: nginx:latest
-    ports:
-      - "80:80"
-    volumes:
-      - ./nginx/config:/etc/nginx/conf.d:ro
-    depends_on:
-      - ssx-odoo
-      - syslog-odoo
-    networks:
-      - app-network
+  # nginx-lb:
+  #   image: nginx:latest
+  #   ports:
+  #     - "80:80"
+  #   volumes:
+  #     - ./nginx/config:/etc/nginx/conf.d:ro
+  #   depends_on:
+  #     - ssx-odoo
+  #     - syslog-odoo
+  #   networks:
+  #     - app-network
