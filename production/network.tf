@@ -26,11 +26,10 @@ resource "aws_db_subnet_group" "odoo-db" {
 resource "aws_network_interface" "odoo_nic" {
   subnet_id = module.vpc.public_subnets[0]
   security_groups = [
-    aws_security_group.odoo-http.id,
-    aws_security_group.odoo-https.id,
+    aws_security_group.allow-ssxodoo.id,
+    aws_security_group.allow-uscorp.id,
     aws_security_group.ssh.id,
-    # aws_security_group.allow_ssxodoo.id,
-    # aws_security_group.allow_syslog.id,
+
   ]
   tags = {
     Name = var.tag_name

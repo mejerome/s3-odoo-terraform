@@ -81,54 +81,54 @@ resource "aws_security_group" "ssh" {
   }
 }
 
-# resource "aws_security_group" "allow_ssxodoo" {
-#   name        = "allow_syslog"
-#   description = "Allow Syslog inbound traffic"
-#   vpc_id      = module.vpc.vpc_id
+resource "aws_security_group" "allow-ssxodoo" {
+  name        = "allow_ssxodoo"
+  description = "Allow SSX inbound traffic"
+  vpc_id      = module.vpc.vpc_id
 
-#   ingress {
-#     description = "ssh from VPC"
-#     from_port   = 8069
-#     to_port     = 8069
-#     protocol    = "tcp"
-#     cidr_blocks = ["0.0.0.0/0"]
-#   }
+  ingress {
+    description = "ssh from VPC"
+    from_port   = 8069
+    to_port     = 8069
+    protocol    = "tcp"
+    cidr_blocks = ["10.0.0.0/16"]
+  }
 
-#   egress {
-#     from_port        = 0
-#     to_port          = 0
-#     protocol         = "-1"
-#     cidr_blocks      = ["0.0.0.0/0"]
-#     ipv6_cidr_blocks = ["::/0"]
-#   }
+  egress {
+    from_port        = 0
+    to_port          = 0
+    protocol         = "-1"
+    cidr_blocks      = ["0.0.0.0/0"]
+    ipv6_cidr_blocks = ["::/0"]
+  }
 
-#   tags = {
-#     Name = var.tag_name
-#   }
-# }
+  tags = {
+    Name = var.tag_name
+  }
+}
 
-# resource "aws_security_group" "allow_syslog" {
-#   name        = "allow_syslog"
-#   description = "Allow Syslog inbound traffic"
-#   vpc_id      = module.vpc.vpc_id
+resource "aws_security_group" "allow-uscorp" {
+  name        = "allow_uscorp"
+  description = "Allow US Corp inbound traffic"
+  vpc_id      = module.vpc.vpc_id
 
-#   ingress {
-#     description = "ssh from VPC"
-#     from_port   = 8068
-#     to_port     = 8068
-#     protocol    = "tcp"
-#     cidr_blocks = ["0.0.0.0/0"]
-#   }
+  ingress {
+    description = "ssh from VPC"
+    from_port   = 8068
+    to_port     = 8068
+    protocol    = "tcp"
+    cidr_blocks = ["10.0.0.0/16"]
+  }
 
-#   egress {
-#     from_port        = 0
-#     to_port          = 0
-#     protocol         = "-1"
-#     cidr_blocks      = ["0.0.0.0/0"]
-#     ipv6_cidr_blocks = ["::/0"]
-#   }
+  egress {
+    from_port        = 0
+    to_port          = 0
+    protocol         = "-1"
+    cidr_blocks      = ["0.0.0.0/0"]
+    ipv6_cidr_blocks = ["::/0"]
+  }
 
-#   tags = {
-#     Name = var.tag_name
-#   }
-# }
+  tags = {
+    Name = var.tag_name
+  }
+}

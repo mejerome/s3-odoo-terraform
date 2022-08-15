@@ -1,4 +1,3 @@
-
 resource "aws_instance" "odoo-app" {
   ami                  = var.odoo_ami
   instance_type        = "t3.small"

@@ -23,7 +23,7 @@ output "ssx_url" {
   value       = aws_route53_record.ssxodoo.name
 }
 
-output "syslog_url" {
-  description = "Syslog URL"
-  value       = aws_route53_record.syslog.name
+output "ssx_loadbalancer_dns" {
+  description = "SSX loadbalancer DNS"
+  value       = aws_lb.ssxghana_lb.dns_name
 }
