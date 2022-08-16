@@ -27,3 +27,8 @@ output "ssx_loadbalancer_dns" {
   description = "SSX loadbalancer DNS"
   value       = aws_lb.ssxghana_lb.dns_name
 }
+
+output "syslog_loadbalancer_dns" {
+  description = "Syslog loadbalancer DNS"
+  value       = aws_lb.syslog_odoo_lb.dns_name
+}

@@ -20,11 +20,11 @@ resource "aws_route53_record" "ssxodoo" {
   ttl     = "300"
 
   records = [
-    aws_lb.ssxghana_lb.dns_name,
+    aws_lb.syslog_odoo_lb.dns_name,
   ]
 
   depends_on = [
-    aws_lb.ssxghana_lb,
+    aws_lb.syslog_odoo_lb
   ]
 }
 

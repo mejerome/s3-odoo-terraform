@@ -91,7 +91,7 @@ resource "aws_security_group" "allow-ssxodoo" {
     from_port   = 8069
     to_port     = 8069
     protocol    = "tcp"
-    cidr_blocks = ["10.0.0.0/16"]
+    cidr_blocks = ["0.0.0.0/0"]
   }
 
   egress {
@@ -117,7 +117,7 @@ resource "aws_security_group" "allow-uscorp" {
     from_port   = 8068
     to_port     = 8068
     protocol    = "tcp"
-    cidr_blocks = ["10.0.0.0/16"]
+    cidr_blocks = ["0.0.0.0/0"]
   }
 
   egress {
