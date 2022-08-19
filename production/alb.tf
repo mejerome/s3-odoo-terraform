@@ -67,6 +67,38 @@ resource "aws_lb_listener" "ssx_ghana" {
   }
 }
 
+resource "aws_lb_listener" "ssx_redirect" {
+  load_balancer_arn = aws_lb.ssxghana_lb.arn
+  port              = "80"
+  protocol          = "HTTP"
+
+  default_action {
+    type = "redirect"
+
+    redirect {
+      port        = "443"
+      protocol    = "HTTPS"
+      status_code = "HTTP_301"
+    }
+  }
+}
+
+resource "aws_lb_listener" "syslog_redirect" {
+  load_balancer_arn = aws_lb.syslog_odoo_lb.arn
+  port              = "80"
+  protocol          = "HTTP"
+
+  default_action {
+    type = "redirect"
+
+    redirect {
+      port        = "443"
+      protocol    = "HTTPS"
+      status_code = "HTTP_301"
+    }
+  }
+}
+
 resource "aws_lb_listener" "syslog_odoo" {
   load_balancer_arn = aws_lb.syslog_odoo_lb.arn
   port              = "443"
@@ -82,7 +114,7 @@ resource "aws_lb_listener" "syslog_odoo" {
 resource "aws_lb" "ssxghana_lb" {
   name               = "ssx-ghana-lb"
   internal           = false
-  security_groups    = [aws_security_group.odoo-https.id]
+  security_groups    = [aws_security_group.odoo-https.id, aws_security_group.odoo-http.id]
   subnets            = module.vpc.public_subnets
   load_balancer_type = "application"
 
@@ -94,7 +126,7 @@ resource "aws_lb" "ssxghana_lb" {
 resource "aws_lb" "syslog_odoo_lb" {
   name               = "syslog-odoo-lb"
   internal           = false
-  security_groups    = [aws_security_group.odoo-https.id]
+  security_groups    = [aws_security_group.odoo-https.id, aws_security_group.odoo-http.id]
   subnets            = module.vpc.public_subnets
   load_balancer_type = "application"
 
