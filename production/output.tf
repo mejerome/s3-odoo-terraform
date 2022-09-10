@@ -18,9 +18,14 @@ output "odoo_instance_dns" {
   value       = aws_instance.odoo-app.public_dns
 }
 
-output "ssx_url" {
+output "syslog_url" {
   description = "SSX URL"
-  value       = aws_route53_record.ssxodoo.name
+  value       = aws_route53_record.syslog-demo.name
+}
+
+output "ssxuscorp_url" {
+  description = "SSX URL"
+  value       = aws_route53_record.ssxuscorp.name
 }
 
 output "ssx_loadbalancer_dns" {

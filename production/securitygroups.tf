@@ -139,7 +139,7 @@ resource "aws_security_group" "allow-uscorp" {
   vpc_id      = module.vpc.vpc_id
 
   ingress {
-    description = "ssh from VPC"
+    description = "Allow US Corp inbound traffic"
     from_port   = 8067
     to_port     = 8067
     protocol    = "tcp"
