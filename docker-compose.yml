@@ -6,24 +6,24 @@ services:
       - "8069:8069"
     volumes:
       - ./custom_addons:/mnt/extra-addons
-      # - ./odoo-data:/var/lib/odoo
+      - odoo-data:/var/lib/odoo
 
     environment:
       - HOST=${RDS_HOST}
       - USER=${RDS_USER}
       - PASSWORD=${RDS_PASSWORD}
 
-  ssx-us-odoo:
+  ssx-us:
     build: ./dockerfile/ssx-us
     ports:
       - "8067:8069"
     volumes:
       - ./custom_addons:/mnt/extra-addons
+      - us-data:/var/lib/odoo
     environment:
       - HOST=${RDS_HOST}
       - USER=${RDS_USER}
       - PASSWORD=${RDS_PASSWORD}
-
 
   syslog-odoo:
     build: ./dockerfile/syslog
@@ -31,6 +31,7 @@ services:
       - "8068:8069"
     volumes:
       - ./custom_addons:/mnt/extra-addons
+      - us-data:/var/lib/odoo
     environment:
       - HOST=${RDS_HOST}
       - USER=${RDS_USER}
@@ -38,4 +39,6 @@ services:
 
 volumes:
   odoo-data:
+    driver: local
+  us-data:
     driver: local
