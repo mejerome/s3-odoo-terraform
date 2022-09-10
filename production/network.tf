@@ -29,6 +29,7 @@ resource "aws_network_interface" "odoo_nic" {
     aws_security_group.allow-ssxodoo.id,
     aws_security_group.allow-uscorp.id,
     aws_security_group.ssh.id,
+    aws_security_group.allow-syslog.id,
 
   ]
   tags = {

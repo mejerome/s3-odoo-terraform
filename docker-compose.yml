@@ -1,24 +1,37 @@
 version: '3.9'
 services:
   ssx-odoo:
-    build: .
+    build: ./dockerfile/ssx-ghana
     ports:
       - "8069:8069"
     volumes:
       - ./custom_addons:/mnt/extra-addons
-      - ./odoo-data:/var/lib/odoo
+      - odoo-data:/var/lib/odoo
 
     environment:
       - HOST=${RDS_HOST}
       - USER=${RDS_USER}
       - PASSWORD=${RDS_PASSWORD}
 
+  ssx-us:
+    build: ./dockerfile/ssx-us
+    ports:
+      - "8067:8069"
+    volumes:
+      - ./custom_addons:/mnt/extra-addons
+      - us-data:/var/lib/odoo
+    environment:
+      - HOST=${RDS_HOST}
+      - USER=${RDS_USER}
+      - PASSWORD=${RDS_PASSWORD}
+
   syslog-odoo:
-    image: odoo:15.0
+    build: ./dockerfile/syslog
     ports:
       - "8068:8069"
     volumes:
       - ./custom_addons:/mnt/extra-addons
+      - us-data:/var/lib/odoo
     environment:
       - HOST=${RDS_HOST}
       - USER=${RDS_USER}
@@ -26,4 +39,6 @@ services:
 
 volumes:
   odoo-data:
+    driver: local
+  us-data:
     driver: local
