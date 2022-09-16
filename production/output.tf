@@ -23,10 +23,10 @@ output "syslog_url" {
   value       = aws_route53_record.syslog-demo.name
 }
 
-output "ssxuscorp_url" {
-  description = "SSX URL"
-  value       = aws_route53_record.ssxuscorp.name
-}
+# output "ssxuscorp_url" {
+#   description = "SSX URL"
+#   value       = aws_route53_record.ssxuscorp.name
+# }
 
 output "ssx_loadbalancer_dns" {
   description = "SSX loadbalancer DNS"

@@ -13,7 +13,7 @@ resource "aws_db_instance" "odoo-db" {
   instance_class         = "db.t3.small"
   allocated_storage      = 60
   engine                 = "postgres"
-  engine_version         = "13.4"
+  # engine_version         = "13.4"
   username               = var.db_username
   password               = var.db_password
   db_subnet_group_name   = aws_db_subnet_group.odoo-db.name
